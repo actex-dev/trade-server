@@ -1,0 +1,14 @@
+[package]
+name = "model"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+sea-orm = { version = "1", features = ["macros", "sqlx-postgres", "runtime-tokio-rustls", "with-uuid", "with-chrono", "with-json", "with-rust_decimal"] }
+serde = { version = "1", features = ["derive"] }
+uuid = { version = "1.8", features = ["v4", "serde"] }
+chrono = "0.4.41"
+async-trait = "0.1"
+rust_decimal = { version = "1", features = ["serde"] }
+thiserror = "1.0"
+serde_json = "1"
