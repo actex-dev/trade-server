@@ -6,12 +6,12 @@ use axum::{
     Router,
 };
 use model::models::user;
-use crate::app::shared::{
+use crate::shared::{
     data::{ErrorResponse, SuccessResponse},
     middlewares::auth::require_refresh_auth,
     data::state::AppState,
 };
-use crate::app::shared::data::{AuthUser};
+use crate::shared::data::{AuthUser};
 
 pub mod service;
 pub mod password;

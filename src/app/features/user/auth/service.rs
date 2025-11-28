@@ -3,7 +3,7 @@ use chrono::Utc;
 use model::models::{user::repo::UserRepositoryTrait};
 use model::models::user::{repo::UserRepository, model as user, entity as user_entity};
 use repository::repositories::{encryption::{EncryptionRepository, EncryptionRepositoryTrait, data::Token}};
-use crate::app::shared::data::{AuthUser};
+use crate::shared::data::{AuthUser};
 
 #[derive(Debug)]
 pub enum AuthError {

@@ -1,6 +1,6 @@
-use app::shared::data::state::AppState;
-use app::shared::utils::config::AppConfig;
-use app::shared::utils::logger;
+use shared::data::state::AppState;
+use shared::utils::config::AppConfig;
+use shared::utils::logger;
 use axum::http::{Method, header};
 use axum::{Extension, Router};
 use dotenvy::dotenv;
@@ -10,7 +10,8 @@ use repository::repositories::Repositories;
 use std::net::SocketAddr;
 use tower_http::cors::CorsLayer;
 
-mod app;
+pub mod features;
+pub mod shared;
 
 async fn health_check() -> &'static str {
     "OK"
@@ -50,7 +51,7 @@ async fn main() {
 
     let app = Router::new()
         .route("/health", axum::routing::get(health_check))
-        .nest("/api/", app::features::router())
+        .nest("/api/", features::router())
         .layer(Extension(repositories.encryption.clone()))
         .with_state(AppState::new(repositories, models))
         .layer(cors);

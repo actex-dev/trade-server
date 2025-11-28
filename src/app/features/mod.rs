@@ -3,9 +3,9 @@ use axum::Router;
 pub mod user;
 
 use axum::middleware;
-use crate::app::shared::middlewares::{logging, recovery, request_id};
+use crate::shared::middlewares::{logging, recovery, request_id};
 
-use crate::app::shared::data::state::AppState;
+use crate::shared::data::state::AppState;
 
 pub fn router() -> Router<AppState> {
     Router::new()

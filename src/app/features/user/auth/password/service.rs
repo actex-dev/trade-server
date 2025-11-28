@@ -4,7 +4,7 @@ use uuid::Uuid;
 use model::models::user::{self as user, repo::UserRepositoryTrait};
 use model::models::user::repo::UserRepository;
 use repository::repositories::encryption::{EncryptionRepository, EncryptionRepositoryTrait, data::Token};
-use crate::app::shared::data::AuthUser;
+use crate::shared::data::AuthUser;
 
 #[derive(Debug)]
 pub enum PasswordError {

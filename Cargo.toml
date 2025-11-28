@@ -1,15 +1,15 @@
 [package]
 name = "node-server"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
 
 [[bin]]
 name = "main"
-path = "src/main.rs"
+path = "src/app/main.rs"
 
 [[bin]]
-name = "worker"
-path = "src/worker.rs"
+name = "dex"
+path = "src/dex/main.rs"
 
 [dependencies]
 tokio = { version = "1", features = ["full"] }
@@ -23,12 +23,15 @@ serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 dotenvy = "0.15"
 futures = "0.3"
-tokio-tungstenite = "0.21"
+tokio-tungstenite = { version = "0.21", features = ["rustls-tls-webpki-roots"] }
+http = "1.0"
 hyper = "1.7.0"
 uuid = { version = "1.8", features = ["v4", "serde"] }
 argon2 = "0.5.3"
 jsonwebtoken = "9.3.1"
 chrono = "0.4.41"
+reqwest = { version = "0.11", features = ["json"] }
+ethers = { version = "2.0", features = ["rustls"] }
 lapin = "2"
 redis = { version = "0.24", features = ["tokio-comp", "streams"] }
 tempfile = "3.8"

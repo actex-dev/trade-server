@@ -7,8 +7,8 @@ use axum::{
     extract::Request,
 };
 
-use crate::app::shared::data::{AuthUser, state::AppState};
-use crate::app::shared::data::ErrorResponse;
+use crate::shared::data::{AuthUser, state::AppState};
+use crate::shared::data::ErrorResponse;
 
 use repository::repositories::encryption::{EncryptionRepository, EncryptionRepositoryTrait, data::{Claims, Token, Sub}};
 use std::sync::Arc;

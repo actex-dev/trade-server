@@ -6,7 +6,7 @@ use axum::{
     Json, Router,
 };
 
-use crate::app::shared::{
+use crate::shared::{
     data::{AuthUser, ErrorResponse, SuccessResponse},
     middlewares::auth::require_user_auth,
     data::state::AppState,
