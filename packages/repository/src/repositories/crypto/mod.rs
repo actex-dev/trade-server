@@ -4,7 +4,10 @@ use hex;
 use rand::Rng;
 use sha2::{Digest, Sha256};
 
+pub mod blockchain_client;
 pub mod data;
+
+pub use blockchain_client::BlockchainClient;
 
 #[allow(dead_code)]
 pub trait CryptoRepositoryTrait {
@@ -68,6 +71,16 @@ impl CryptoRepository {
                 e
             ))),
         }
+    }
+
+    /// Generate a blockchain client for interacting with the chain
+    pub async fn generate_blockchain_client(
+        &self,
+        rpc_url: &str,
+    ) -> Result<BlockchainClient, CryptoError> {
+        BlockchainClient::new(rpc_url).await.map_err(|e| {
+            CryptoError::NetworkError(format!("Failed to create blockchain client: {}", e))
+        })
     }
 }
 

@@ -1,5 +1,3 @@
-pub mod blockchain_client;
-// pub mod token_data;
 pub mod service;
 
 use axum::Router;

@@ -37,15 +37,13 @@ abigen!(
 
 pub struct BlockchainClient {
     provider: Arc<Provider<Http>>,
-    chain_id: String,
 }
 
 impl BlockchainClient {
-    pub async fn new(rpc_url: &str, chain_id: String) -> Result<Self, Box<dyn std::error::Error + Send + Sync>> {
+    pub async fn new(rpc_url: &str) -> Result<Self, Box<dyn std::error::Error + Send + Sync>> {
         let provider = Provider::<Http>::try_from(rpc_url)?;
         Ok(Self {
-            provider: Arc::new(provider),
-            chain_id,
+            provider: Arc::new(provider)
         })
     }
 

@@ -4,7 +4,7 @@ use shared::utils::logger;
 use axum::http::{Method, header};
 use axum::{Extension, Router};
 use dotenvy::dotenv;
-use migration::{Migrator, MigratorTrait};
+use model::migration::{Migrator, MigratorTrait};
 use model::models::Models;
 use repository::repositories::Repositories;
 use std::net::SocketAddr;

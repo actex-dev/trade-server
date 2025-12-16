@@ -18,10 +18,10 @@ impl BlockchainConfig {
         let mut stable_tokens = HashMap::new();
 
         // BSC RPC endpoints (public)
-        rpc_urls.insert(
-            "bsc".to_string(),
-            "https://bsc-dataseed.binance.org/".to_string(),
-        );
+        let bsc_rpc_url = std::env::var("BSC_RPC_URL")
+            .unwrap_or_else(|_| "https://bsc-dataseed.binance.org/".to_string());
+
+        rpc_urls.insert("bsc".to_string(), bsc_rpc_url);
 
         // Solana RPC (for future use)
         rpc_urls.insert(
@@ -32,24 +32,22 @@ impl BlockchainConfig {
         // BSC stable tokens for price calculation
         stable_tokens.insert(
             "bsc_wbnb".to_string(),
-            "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c".to_string(), // WBNB
+            "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c".to_string(),
         );
         stable_tokens.insert(
             "bsc_busd".to_string(),
-            "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56".to_string(), // BUSD
+            "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56".to_string(),
         );
         stable_tokens.insert(
             "bsc_usdt".to_string(),
-            "0x55d398326f99059fF775485246999027B3197955".to_string(), // USDT
+            "0x55d398326f99059fF775485246999027B3197955".to_string(),
         );
 
         Self {
             rpc_urls,
             dex_contracts: DexContracts {
-                pancakeswap_v2_factory: "0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73"
-                    .to_string(),
-                pancakeswap_v2_router: "0x10ED43C718714eb63d5aA57B78B54704E256024E"
-                    .to_string(),
+                pancakeswap_v2_factory: "0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73".to_string(),
+                pancakeswap_v2_router: "0x10ED43C718714eb63d5aA57B78B54704E256024E".to_string(),
             },
             stable_tokens,
         }

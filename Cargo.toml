@@ -43,9 +43,9 @@ anyhow = "1.0"
 rust_decimal = { version = "1", features = ["serde"] }
 
 # Migration crate dependency to run migrations from main
-migration = { path = "packages/migration" }
+# Migration crate dependency to run migrations from main
 model = { path = "packages/model" }
 repository = { path = "packages/repository" }
 
 [workspace]
-members = [".", "packages/migration", "packages/model", "packages/repository"]
+members = [".", "packages/model", "packages/repository"]

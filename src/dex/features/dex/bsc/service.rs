@@ -6,10 +6,10 @@ use axum::{
     response::IntoResponse,
 };
 use futures::{SinkExt, StreamExt};
+use repository::repositories::crypto::BlockchainClient;
 use serde::Serialize;
 use tokio::time::{interval, Duration};
 
-use super::blockchain_client::BlockchainClient;
 use crate::shared::config::BlockchainConfig;
 
 #[derive(Debug, Serialize, Clone)]
@@ -28,7 +28,10 @@ pub async fn handle_token_websocket(
     ws: WebSocketUpgrade,
     Path(token_address): Path<String>,
 ) -> impl IntoResponse {
-    tracing::info!("WebSocket connection request for BSC token: {}", token_address);
+    tracing::info!(
+        "WebSocket connection request for BSC token: {}",
+        token_address
+    );
     ws.on_upgrade(move |socket| handle_socket(socket, token_address))
 }
 
@@ -47,7 +50,8 @@ async fn handle_socket(socket: WebSocket, token_address: String) {
                     serde_json::json!({
                         "error": "Unsupported chain"
                     })
-                    .to_string(),
+                    .to_string()
+                    .into(),
                 ))
                 .await;
             return;
@@ -55,7 +59,7 @@ async fn handle_socket(socket: WebSocket, token_address: String) {
     };
 
     // Create blockchain client
-    let client = match BlockchainClient::new(rpc_url, chain_id.clone()).await {
+    let client = match BlockchainClient::new(rpc_url).await {
         Ok(client) => client,
         Err(e) => {
             tracing::error!("Failed to create blockchain client: {}", e);
@@ -64,7 +68,8 @@ async fn handle_socket(socket: WebSocket, token_address: String) {
                     serde_json::json!({
                         "error": "Failed to connect to blockchain"
                     })
-                    .to_string(),
+                    .to_string()
+                    .into(),
                 ))
                 .await;
             return;
@@ -92,7 +97,7 @@ async fn handle_socket(socket: WebSocket, token_address: String) {
 
                 // Send update to client
                 let message = match serde_json::to_string(&token_data) {
-                    Ok(json) => Message::Text(json),
+                    Ok(json) => Message::Text(json.into()),
                     Err(e) => {
                         tracing::error!("Failed to serialize token data: {}", e);
                         continue;
@@ -104,7 +109,7 @@ async fn handle_socket(socket: WebSocket, token_address: String) {
                     break;
                 }
             }
-            
+
             msg = receiver.next() => {
                 match msg {
                     Some(Ok(Message::Close(_))) => {
